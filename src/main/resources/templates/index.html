@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form th:method="GET" th:action="@{/logout}">
+    <input type="submit" value="Выйти">
+</form>
+<div>
+    <th:block th:each="msg : ${messages}">
+        <h1 th:text="${msg}"></h1>
+    </th:block>
+</div>
+<h3>
+    <br>
+    <div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
+        <a th:href="@{/user}">страница пользователя</a>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/admin}">страница админа</a>
+    </div>
+</h3>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new user</title>
+</head>
+<body>
+<h3>
+    <form  th:method="GET" th:action="@{/logout}">
+        <input type="submit" value="Выйти"/>
+    </form>
+</h3>
+<h2>Adding data for new user</h2>
+<form th:method="POST" th:action="@{/admin}" th:object="${user}">
+    <table border="0" style="width:10%">
+        <tr>
+            <td/>
+            <label for="firstName">name:</label>
+            <td/>
+            <input type="text" th:field="*{firstName}" id="firstName"/>
+        </tr>
+        <tr>
+            <td/>
+            <label for="lastName">last name:</label>
+            <td/>
+            <input type="text" th:field="*{lastName}" id="lastName"/>
+        </tr>
+        <tr>
+            <td/>
+            <label for="email">email:</label>
+            <td/>
+            <input type="text" th:field="*{email}" id="email"/>
+        </tr>
+        <tr>
+            <td/>
+            <label for="address">address:</label>
+            <td/>
+            <input type="text" th:field="*{address}" id="address"/>
+        </tr>
+        <tr>
+            <td/>
+            <label for="password">password:</label>
+            <td/>
+            <input type="text" th:field="*{password}" id="password"/>
+        </tr>
+    </table>
+    <div class="checkbox" th:each="role : ${allRoles}">
+        <label th:text="${role.role}"></label>
+        <input id="checkedRoles" name="checkedRoles" type="checkbox" th:value="${role.role}">
+    </div>
+
+    <br/>
+
+    <input type="submit" value="Дабавить"/>
+</form>
+
+</body>
+</html>

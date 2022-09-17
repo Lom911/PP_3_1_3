@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css"/>
+    <!--<script type="text/javascript" src="webjars/jquery/3.6.0/jquery.min.js"></script>-->
+    <!-- Bootstrap Bundle with Popper -->
+    <script type="text/javascript" src="webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js"></script>
+
+    <title>Панель админа</title>
+</head>
+<body>
+<h1>Учетные данные пользователей</h1>
+<table th:border="0">
+    <tr>
+        <th>
+            <form
+                th:method="GET" th:action="@{/admin/new}">
+                <input type="submit" value="Добавить пользователя">
+            </form>
+        </th>
+        <th>
+            <form
+                    th:method="GET" th:action="@{/logout}">
+                <input type="submit" value="Выйти">
+            </form>
+        </th>
+    </tr>
+</table>
+<br>
+<div th:unless="${#lists.isEmpty(usersAll)}">
+<table border="1">
+    <tr>
+        <th>No</th>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Email</th>
+        <th>Роль</th>
+    </tr>
+
+    <tr th:each="user, state : ${usersAll}">
+        <td th:utext="${state.count} "></td>
+        <td th:utext="${user.id} "></td>
+        <td th:utext="${user.firstName}"></td>
+        <td th:utext="${user.lastName}"></td>
+        <td th:utext="${user.email}"></td>
+        <td>
+            <!--/*@thymesVar id="user" type=""*/-->
+            <th:block th:each="role : ${user.roles}">
+                <span style="color:darkred" th:utext="${role.role}"></span><br/>
+            </th:block>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/admin/id/{id}(id=${user.id})}">
+                <input type="submit" value="Детали">
+            </form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/admin/id/{id}/edit(id=${user.id})}">
+                <input type="submit" value="Изменить">
+            </form>
+        <td>
+            <form th:method="DELETE" th:action="@{/admin/id/{id}(id=${user.id})}">
+                <input type="submit" value="Удалить"/>
+            </form>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>
